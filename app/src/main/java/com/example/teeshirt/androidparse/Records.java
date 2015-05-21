@@ -1,10 +1,14 @@
 package com.example.teeshirt.androidparse;
 
+import android.app.ListActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -14,11 +18,12 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
-public class Records extends ActionBarActivity {
-    private TextView cname, cemail;
+public class Records extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +32,29 @@ public class Records extends ActionBarActivity {
 
 
 
-        ParseQueryAdapter<ParseObject> adapter = new ParseQueryAdapter<ParseObject>(this, "Contact");
-        adapter.setTextKey("name");
-        //adapter.setTextKey("email");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Contact");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> results, ParseException e) {
+                if (e==null){
+                    ArrayList<HashMap<String, String>> details = new ArrayList<HashMap<String, String>>();
+                    for (ParseObject result : results){
+                        HashMap<String,String> detail = new HashMap<String, String>();
+                        detail.put("name", result.getString("name"));
+                        detail.put("email", result.getString("email"));
+                        details.add(detail);
 
-        ListView listView = (ListView)findViewById(R.id.listView);
-        listView.setAdapter(adapter);
+                        String[] from = {"name", "email"};
+                        int[] to = {R.id.name, R.id.email};
+                        SimpleAdapter adapter = new SimpleAdapter(Records.this, details, R.layout.list_items,from,to);
+                        setListAdapter(adapter);
+
+
+                    }
+                }
+            }
+        });
+
 
     }
 
@@ -55,3 +77,11 @@ public class Records extends ActionBarActivity {
                 }
             }
         });*/
+
+
+//Retrieving one column in a listview
+/*ParseQueryAdapter<ParseObject> adapter = new ParseQueryAdapter<ParseObject>(this, "Contact");
+        adapter.setTextKey("name");
+
+        ListView listView = (ListView)findViewById(R.id.listView);
+        listView.setAdapter(adapter);*/
