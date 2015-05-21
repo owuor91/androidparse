@@ -26,4 +26,12 @@
         android:id="@+id/save"
         android:text="SAVE"
         android:elevation="5dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/see"
+        android:text="See All Records"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
 </RelativeLayout>
