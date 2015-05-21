@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -34,6 +35,11 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 String name = etName.getText().toString();
                 String email = etEmail.getText().toString();
+
+                ParseObject contact = new ParseObject("Contact");
+                contact.put("name", name);
+                contact.put("email",email);
+                contact.saveInBackground();
             }
         });
     }
