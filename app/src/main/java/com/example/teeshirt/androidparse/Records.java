@@ -4,12 +4,17 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
+
+import java.util.List;
 
 
 public class Records extends ActionBarActivity {
@@ -20,11 +25,25 @@ public class Records extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
 
-        cname = (TextView)findViewById(R.id.contactname);
-        cemail = (TextView)findViewById(R.id.contactemail);
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Contact");
-        query.getInBackground("JgrWk0aenO", new GetCallback<ParseObject>() {
+
+        ParseQueryAdapter<ParseObject> adapter = new ParseQueryAdapter<ParseObject>(this, "Contact");
+        adapter.setTextKey("name");
+        //adapter.setTextKey("email");
+
+        ListView listView = (ListView)findViewById(R.id.listView);
+        listView.setAdapter(adapter);
+
+    }
+
+
+}
+
+
+
+//Retrieving single object
+        /*ParseQuery<ParseObject> query = ParseQuery.getQuery("Contact");
+        query.getInBackground("xJJSATOH03", new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject contact, ParseException e) {
                 if (e == null) {
@@ -35,9 +54,4 @@ public class Records extends ActionBarActivity {
                     cemail.setText(email);
                 }
             }
-        });
-
-    }
-
-
-}
+        });*/
