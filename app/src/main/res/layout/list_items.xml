@@ -27,6 +27,8 @@
         android:padding="5dp"
         android:layout_toRightOf="@+id/pic"
         android:layout_below="@+id/name"/>
+
+
     </RelativeLayout>
 
 </LinearLayout>
