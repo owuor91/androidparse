@@ -19,6 +19,7 @@ import com.parse.GetCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseImageView;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
@@ -33,7 +34,7 @@ import java.util.Map;
 
 public class Records extends ListActivity {
 
-
+    private ParseQueryAdapter<Contact> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,34 +42,12 @@ public class Records extends ListActivity {
         setContentView(R.layout.activity_records);
 
 
+        adapter=new ParseQueryAdapter<Contact>(this, Contact.class);
+        adapter.setTextKey("name");
+        adapter.setTextKey("email");
+        adapter.setImageKey("image");
 
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Contact");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> results, ParseException e) {
-
-                if (e == null) {
-                    ArrayList<HashMap<String, String>> details = new ArrayList<HashMap<String, String>>();
-                    for (ParseObject result : results) {
-                        HashMap<String, String> detail = new HashMap<String, String>();
-                        detail.put("name", result.getString("name"));
-                        detail.put("email", result.getString("email"));
-                        detail.put("imgUrl", result.getString("imgUrl"));
-                        details.add(detail);
-
-
-                        String[] from = {"name", "email"};
-                        int[] to = {R.id.name, R.id.email};
-                        SimpleAdapter adapter = new SimpleAdapter(Records.this, details, R.layout.list_items, from, to);
-                        setListAdapter(adapter);
-
-
-                    }
-                }
-            }
-        });
-
-
+        setListAdapter(adapter);
 
 
 

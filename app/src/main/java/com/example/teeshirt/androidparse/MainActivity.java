@@ -23,6 +23,9 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ParseObject.registerSubclass(Contact.class);
+
+
         Parse.enableLocalDatastore(this);
 
         Parse.initialize(this, "bOGl1QdNcltdgq34tsZq9BnvHGH9wcUoLfc0wLnH", "nhP3nptOFZHFAHmd1Zlhm1RjQvitC8iHBG3R8V0Z");
